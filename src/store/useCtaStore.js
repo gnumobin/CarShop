@@ -1,3 +1,5 @@
+'use strict';
+
 import { create } from "zustand";
 
 // Define the Zustand store

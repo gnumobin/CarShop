@@ -2,6 +2,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
 @theme {
@@ -15,6 +16,11 @@ body {
     --text-3-5xl: 1.9rem;
     --text-4xl: 2rem;
     --text-6xl: 3.6rem;
+}
+
+@utility container {
+    max-width: 128rem;
+    margin: 0 auto;
 }
 
 html {

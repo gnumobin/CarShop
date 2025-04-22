@@ -10,7 +10,7 @@ import Logo from "/logo.png";
 
 function Footer() {
   return (
-    <footer className="bg-gray-100 py-8 text-[1.9rem] text-primary font-[500]">
+    <footer className="bg-forground py-8 text-3-5xl text-primary font-[500] pt-[6rem]">
       {/* Main Container */}
       <div className="mx-auto px-4 flex flex-col md:flex-row justify-between gap-25">
         {/* Left Column */}
@@ -37,7 +37,7 @@ function Footer() {
 
         {/* Middle Column */}
         <div className="w-full md:w-1/3 text-center md:text-left space-y-[3.2rem]">
-          <h3 className="text-lg font-bold text-[2rem]">Contato</h3>
+          <h3 className="font-bold text-4xl">Contato</h3>
           <p>
             <a href="#">WhatsApp</a>
           </p>
@@ -51,7 +51,7 @@ function Footer() {
 
         {/* Right Column */}
         <div className="w-full md:w-1/3 text-center md:text-left space-y-[3.8rem]">
-          <h3 className="text-lg font-bold text-[2rem]">Inscreva-se</h3>
+          <h3 className="font-bold text-4xl">Inscreva-se</h3>
           <p>
             Informe seu email para receber as últimas novidades da Touring Cars.
           </p>
@@ -72,7 +72,7 @@ function Footer() {
       </div>
 
       {/* Copyright Section */}
-      <div className="mt-[5rem] md:mt-[10rem] text-center text-[1.8rem] text-gray-600">
+      <div className="mt-[5rem] md:mt-[10rem] text-center text-3xl text-gray-600">
         <p>© 2024 Todos os direitos reservados.</p>
       </div>
     </footer>

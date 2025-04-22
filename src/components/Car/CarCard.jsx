@@ -6,11 +6,13 @@ const CarCard = ({ car }) => {
   return (
     <div className="border border-line-super-light rounded-[2.5rem] overflow-hidden p-[2rem] pb-0">
       {/* Car Image */}
-      <img
-        src={Pic}
-        alt={car.model}
-        className="w-full h-48 sm:h-64 object-cover rounded-[1.5rem] mb-[3rem]"
-      />
+      <div className="rounded-[1.5rem] mb-[3rem] overflow-hidden h-62">
+        <img
+          src={Pic}
+          alt={car.model}
+          className="w-full h-full sm:h-64 object-cover "
+        />
+      </div>
 
       {/* Car Details */}
       <div className="p-4 space-y-[2.6rem]">
@@ -44,7 +46,7 @@ const CarCard = ({ car }) => {
             <Button text="HÍBRIDO" variant="hibrido" />
 
             {/* Eletrico Button */}
-            <Button text="ELÉTRICO" variant="eletrico" />
+            {/* <Button text="ELÉTRICO" variant="eletrico" /> */}
           </div>
         </div>
       </div>

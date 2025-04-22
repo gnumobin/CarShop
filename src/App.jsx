@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer";
 import CtaForm from "./components/CtaForm";
 import Header from "./components/Header";
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       </Routes>
       <CtaForm />
       <Footer />
+      <ScrollUpButton />
     </>
   );
 }

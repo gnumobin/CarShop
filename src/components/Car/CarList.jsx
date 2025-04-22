@@ -34,7 +34,7 @@ const CarList = () => {
   ];
 
   return (
-    <div className="w-2/3 mx-auto p-4">
+    <div className="md:w-2/3 p-4">
       {/* Responsive Grid Layout */}
       <div className="grid grid-cols-1 gap-[3rem] sm:grid-cols-2 lg:grid-cols-3">
         {cars.map((car) => (

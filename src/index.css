@@ -1,43 +1,46 @@
 @import "tailwindcss";
 
 body {
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
 }
 
 @theme {
-    --color-primary: #0C0C0C;
-    --color-forground: #F7F7F7;
-    --color-line: rgba(0,0,0,.5);
-    --color-line-light: rgba(0,0,0,.35);
-    --color-line-super-light: rgba(0,0,0,0.2);
-    --color-secondary: #1D85FF;
-    --color-tertiary: #33FF00;
-    --text-md: 1.2rem;
-    --text-xl: 1.4rem;
-    --text-2xl: 1.6rem;
-    --text-3xl: 1.8rem;
-    --text-3-5xl: 1.9rem;
-    --text-4xl: 2rem;
-    --text-6xl: 3.6rem;
-    --tracking-custom: 114.99999999999999%;
+  --color-primary: #0c0c0c;
+  --color-forground: #f7f7f7;
+  --color-thin: rgba(0, 0, 0, 0.3);
+  --color-line: rgba(0, 0, 0, 0.5);
+  --color-line-light: rgba(0, 0, 0, 0.35);
+  --color-line-super-light: rgba(0, 0, 0, 0.2);
+  --color-secondary: #1d85ff;
+  --color-tertiary: #33ff00;
+  --text-md: 1.2rem;
+  --text-xl: 1.4rem;
+  --text-2xl: 1.6rem;
+  --text-3xl: 1.8rem;
+  --text-3-5xl: 1.9rem;
+  --text-4xl: 2rem;
+  --text-6xl: 3.6rem;
+  --tracking-custom: 114.99999999999999%;
 }
 
 @utility container {
-    max-width: 128rem;
-    margin: 0 auto;
+  max-width: 128rem;
+  margin: 0 auto;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 button {
-    cursor: pointer;
-    letter-spacing: 114.99999999999999%;
+  cursor: pointer;
+  letter-spacing: 114.99999999999999%;
 }
 
-h2, h3 {
-    font-weight: 600;
-    letter-spacing: 114.99999999999999%;
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  line-height: 114.99999999999999%;
 }

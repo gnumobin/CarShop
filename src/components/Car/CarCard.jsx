@@ -3,16 +3,15 @@ import Pic from "../../assets/img/car.png";
 import Button from "../../utils/Button";
 
 const CarCard = ({ car }) => {
+  console.log(car)
   return (
     <div className="border border-line-super-light rounded-[2.5rem] overflow-hidden p-[2rem] pb-0">
       {/* Car Image */}
-      <div className="rounded-[1.5rem] mb-[3rem] overflow-hidden h-62">
         <img
-          src={Pic}
+          src={car.main_image}
           alt={car.model}
-          className="w-full h-full sm:h-64 object-cover "
+          className="w-full h-48 sm:h-64 object-cover rounded-[1.5rem]"
         />
-      </div>
 
       {/* Car Details */}
       <div className="p-4 space-y-[2.6rem]">
@@ -39,14 +38,12 @@ const CarCard = ({ car }) => {
           </button>
 
           <div className="flex gap-2">
-            {/* Blindado Button */}
-            <Button text="BLINDADO" variant="blindado" />
-
             {/* Hibrido Button */}
-            <Button text="HÍBRIDO" variant="hibrido" />
-
+            {car.fuel === 'Hybrid' && <Button text="HÍBRIDO" variant="hibrido" />}
+            {/* Blindado Button */}
+            {car.is_bulletproof && <Button text="BLINDADO" variant="blindado" />}
             {/* Eletrico Button */}
-            {/* <Button text="ELÉTRICO" variant="eletrico" /> */}
+            {car.is_electric && <Button text="ELÉTRICO" variant="eletrico" />}
           </div>
         </div>
       </div>

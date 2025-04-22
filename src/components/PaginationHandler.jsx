@@ -1,25 +1,15 @@
-import React, { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import usePaginationStore from "../store/usePaginationStore";
-import { fetchPaginationData } from "../conf/api";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import usePaginationStore from "../store/usePaginationStore";
 
 const PaginationHandler = () => {
   // Extract state and actions from the Zustand store
   const { currentPage, totalPages, setCurrentPage } = usePaginationStore();
 
-  // Fetch pagination data using TanStack Query
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["pagination"], // Unique key for the query
-    queryFn: fetchPaginationData, // API function
-    refetchOnWindowFocus: false, // Prevent unnecessary refetching
-  });
+  console.log(totalPages);
 
   // Handle page change
   const handleChangePage = (newPage) => {
-    if (newPage >= 1 && newPage <= (data?.totalPages || totalPages)) {
-      setCurrentPage(newPage);
-    }
+    setCurrentPage(newPage);
   };
 
   // Previous Page Button
@@ -32,44 +22,24 @@ const PaginationHandler = () => {
     handleChangePage(currentPage + 1);
   };
 
-  // Loading State
-  if (isLoading) {
-    return <div className="text-gray-500">Carregando...</div>;
-  }
-
-  // Error State
-  if (isError) {
-    return (
-      <div className="text-red-500">
-        Erro ao carregar dados: {error.message}
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col items-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 mt-[5rem] justify-center text-4xl open-sans text-line">
-      <div className="bg-forground px-[1.8rem] py-[1.35rem] rounded-[2.5rem] flex items-center gap-[2.5rem]">
-        {/* Current Page Info */}
-        <span className="text-gray-500">
-          Página <strong className="text-primary">{currentPage}</strong> de{" "}
-          <strong>{data?.totalPages || totalPages}</strong>
+    <div className="flex flex-col items-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 justify-center text-4xl open-sans mt-[5.2rem]">
+      <div className="flex gap-[2.5rem] items-center justify-between bg-forground px-[1.8rem] py-[1.35rem] rounded-[2.5rem]">
+        <span className="text-line">
+          Página <strong className="text-primary">{currentPage}</strong> de <strong>{totalPages}</strong>
         </span>
-
-        {/* Navigation Buttons */}
-        <div className="flex space-x-2 text-[3rem]">
-          {/* Previous Page Button */}
+        <div className="flex space-x-2 text-5xl">
           <button
-            className=" border-gray-300 px-2 py-1 rounded hover:bg-gray-100 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className=" px-2 py-1 rounded hover:bg-gray-100 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed mr-[2.5rem]"
             onClick={handlePrevPage}
             disabled={currentPage === 1}
           >
             <FaChevronLeft />
           </button>
-          {/* Next Page Button */}
           <button
-            className=" border-gray-300 px-2 py-1 rounded hover:bg-gray-100 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-2 py-1 rounded hover:bg-gray-100 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleNextPage}
-            disabled={currentPage === (data?.totalPages || totalPages)}
+            disabled={currentPage === totalPages}
           >
             <FaChevronRight />
           </button>

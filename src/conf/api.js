@@ -1,13 +1,25 @@
 import axios from "axios";
 
-// Simulated API function
-export const fetchPaginationData = async () => {
-  // Simulate a delay for the API call
-  const response = await axios.get(
-    "https://api-cars.abolfazlrabiei.ir/api/cars",
-    {
-      timeout: 5000, // Optional: Add a timeout
-    }
-  );
-  return response.data; // Expected response: { currentPage: 1, totalPages: 4 }
+// Base URL for the API
+const BASE_URL = "https://api-cars.abolfazlrabiei.ir/api/cars";
+
+// Function to fetch car data with pagination
+export const fetchCarData = async ({ page, limit }) => {
+  try {
+    const response = await axios.get(BASE_URL, {
+      params: { page, limit }, // Pagination parameters
+    });
+
+    const cars = response.data.items || [];
+    const totalCount = response.data.total || cars.length; // Total number of cars
+    const totalPages = Math.ceil(totalCount / limit); // Calculate total pages
+
+    return {
+      cars,
+      totalPages,
+      currentPage: page,
+    };
+  } catch (error) {
+    throw new Error("Failed to fetch car data");
+  }
 };

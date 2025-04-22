@@ -1,47 +1,68 @@
-import React from "react";
 import CarCard from "./CarCard";
+import React, { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCarData } from "../../conf/api";
+import usePaginationStore from "../../store/usePaginationStore";
 import PaginationHandler from "../PaginationHandler";
 
 const CarList = () => {
-  // Sample data for car listings
-  const cars = [
-    {
-      id: 1,
-      make: "TOYOTA",
-      model: "SW4 Diamond",
-      year: "2023",
-      mileage: "114.9km",
-      price: 390000,
-      image: "https://via.placeholder.com/600x400?text=TOYOTA+SW4",
-    },
-    {
-      id: 2,
-      make: "AUDI",
-      model: "RS6 Avant 4.0 TFSI Quattro",
-      year: "2023",
-      mileage: "80km",
-      price: 1180000,
-      image: "https://via.placeholder.com/600x400?text=AUDI+RS6",
-    },
-    {
-      id: 3,
-      make: "LAND ROVER",
-      model: "Range Rover Sport",
-      year: "2024",
-      mileage: "57km",
-      price: 970000,
-      image: "https://via.placeholder.com/600x400?text=LAND+ROVER+Range+Rover",
-    },
-  ];
+  // Extract state and actions from the Zustand store
+  const { currentPage, totalPages, setCurrentPage, setTotalPages } =
+    usePaginationStore();
+
+  // Fetch car data using TanStack Query
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["cars", currentPage], // Include currentPage in the query key
+    queryFn: () => fetchCarData({ page: currentPage, limit: 10 }), // Fetch 10 items per page
+  });
+
+  // Log the fetched data for debugging
+  console.log("Fetched Data:", data);
+
+  // Update total pages when data is fetched
+  useEffect(() => {
+    if (data?.totalPages) {
+      setTotalPages(data.totalPages);
+    }
+  }, [data?.totalPages, setTotalPages]);
+
+  // Handle page change
+  const handleChangePage = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  // Previous Page Button
+  const handlePrevPage = () => {
+    handleChangePage(currentPage - 1);
+  };
+
+  // Next Page Button
+  const handleNextPage = () => {
+    handleChangePage(currentPage + 1);
+  };
+
+  // Loading State
+  if (isLoading) {
+    return <div className="text-gray-500">Carregando...</div>;
+  }
+
+  // Error State
+  if (isError) {
+    return (
+      <div className="text-red-500">
+        Erro ao carregar dados: {error.message}
+      </div>
+    );
+  }
 
   return (
-    <div className="md:w-2/3 p-4">
-      {/* Responsive Grid Layout */}
-      <div className="grid grid-cols-1 gap-[3rem] sm:grid-cols-2 lg:grid-cols-3">
-        {cars.map((car) => (
-          <CarCard key={car.id} car={car} />
-        ))}
+    <div>
+      {/* Car List */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {data?.cars?.map((car) => (<CarCard car={car} key={car.id}/>))}
       </div>
+
+      {/* Pagination Handler */}
       <PaginationHandler />
     </div>
   );

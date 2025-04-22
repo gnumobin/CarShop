@@ -1,5 +1,6 @@
 import React from "react";
 import CarCard from "./CarCard";
+import PaginationHandler from "../PaginationHandler";
 
 const CarList = () => {
   // Sample data for car listings
@@ -41,6 +42,7 @@ const CarList = () => {
           <CarCard key={car.id} car={car} />
         ))}
       </div>
+      <PaginationHandler />
     </div>
   );
 };

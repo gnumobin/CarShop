@@ -116,7 +116,7 @@ const NavLink = ({ href, children, isActive, onClick }) => {
       className={`block px-[2rem] py-[1rem] rounded-full ${
         isActive
           ? "text-white bg-black rounded"
-          : "text-gray-500 hover:text-gray-800"
+          : "text-primary hover:text-gray-800"
       } transition duration-300`}
       onClick={onClick}
     >

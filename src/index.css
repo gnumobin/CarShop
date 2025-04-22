@@ -10,12 +10,17 @@ body {
     --color-forground: #F7F7F7;
     --color-line: rgba(0,0,0,.5);
     --color-line-light: rgba(0,0,0,.35);
+    --color-line-super-light: rgba(0,0,0,0.2);
+    --color-secondary: #1D85FF;
+    --color-tertiary: #33FF00;
+    --text-md: 1.2rem;
     --text-xl: 1.4rem;
     --text-2xl: 1.6rem;
     --text-3xl: 1.8rem;
     --text-3-5xl: 1.9rem;
     --text-4xl: 2rem;
     --text-6xl: 3.6rem;
+    --tracking-custom: 114.99999999999999%;
 }
 
 @utility container {
@@ -29,9 +34,10 @@ html {
 
 button {
     cursor: pointer;
+    letter-spacing: 114.99999999999999%;
 }
 
 h2, h3 {
     font-weight: 600;
-    line-height: 114.99999999999999%;
+    letter-spacing: 114.99999999999999%;
 }

@@ -1,7 +1,11 @@
+import CarList from "../components/Car/CarList";
 
 function HomePage() {
-  return <>
-  </>
+  return (
+    <>
+      <CarList />
+    </>
+  );
 }
 
-export default HomePage
+export default HomePage;

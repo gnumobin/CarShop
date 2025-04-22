@@ -26,7 +26,7 @@ function CtaForm() {
   };
   return (
     <div className="bg-forground">
-      <div className="max-w-[112rem] mx-auto p-6 border-b border-line-light pb-[7rem]">
+      <section className="max-w-[112rem] mx-auto p-6 border-b border-line-light pb-[7rem] pt-[10rem]">
         {/* Heading and Description */}
         <div className="mb-8 md:mb-[5rem] space-y-[1rem]">
           <h2 className="text-2xl font-bold sm:text-3xl md:text-6xl md:w-1/2">
@@ -40,7 +40,7 @@ function CtaForm() {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 border p-8 md:py-[9rem] md:px-[5rem] rounded-2xl border-line"
+          className="space-y-4 border p-8 md:py-[9rem] md:px-[5rem] rounded-4xl border-line"
         >
           {/* Input Fields */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 md:text-3xl text-xl font-[400]">
@@ -50,7 +50,7 @@ function CtaForm() {
               placeholder="Modelo"
               value={formData.modelo}
               onChange={handleChange}
-              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-2xl focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-xl focus:outline-none focus:border-blue-500"
             />
             <input
               type="text"
@@ -58,7 +58,7 @@ function CtaForm() {
               placeholder="Nome"
               value={formData.nome}
               onChange={handleChange}
-              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-2xl focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-xl focus:outline-none focus:border-blue-500"
             />
             <input
               type="email"
@@ -66,7 +66,7 @@ function CtaForm() {
               placeholder="E-mail"
               value={formData.email}
               onChange={handleChange}
-              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-2xl focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-xl focus:outline-none focus:border-blue-500"
             />
             <input
               type="tel"
@@ -74,13 +74,13 @@ function CtaForm() {
               placeholder="Número"
               value={formData.numero}
               onChange={handleChange}
-              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-2xl focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 px-[1.5rem] py-4 md:py-[1.2rem] rounded-xl focus:outline-none focus:border-blue-500"
             />
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-black text-white px-[1.5rem] py-4 md:py-[1.2rem] rounded-2xl hover:bg-gray-800 transition duration-300 sm:w-auto md:text-3xl text-xl"
+              className="w-full bg-black text-white px-[1.5rem] py-4 md:py-[1.2rem] rounded-xl hover:bg-gray-800 transition duration-300 sm:w-auto md:text-3xl text-xl"
             >
               Enviar
             </button>
@@ -98,7 +98,7 @@ function CtaForm() {
             />
             <label
               htmlFor="acceptTerms"
-              className="text-xs text-gray-500 sm:text-sm"
+              className="text-sm text-gray-500 sm:text-xl tracking-custom font-light"
             >
               De acordo com a LGPD, concordo em fornecer os dados acima para que
               o Touwing Care entre em contato comigo para apresentar serviços.
@@ -107,7 +107,7 @@ function CtaForm() {
             </label>
           </div>
         </form>
-      </div>
+      </section>
     </div>
   );
 }

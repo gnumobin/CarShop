@@ -49,7 +49,7 @@ function Header() {
           <NavLink href="/" isActive={isActive("/")} onClick={closeMenu}>
             Sobre
           </NavLink>
-          <NavLink href="/contate" isActive={isActive("/contate")} onClick={closeMenu}>
+          <NavLink href="/car" isActive={isActive("/car")} onClick={closeMenu}>
             Contate
           </NavLink>
           <NavLink href="/anunciar" isActive={isActive("/anunciar")} onClick={closeMenu}>

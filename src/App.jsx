@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import CtaForm from "./components/CtaForm";
 import Header from "./components/Header";
 import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
+import CarPage from "./pages/CarPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/car" element={<CarPage />} />
       </Routes>
       <CtaForm />
       <Footer />

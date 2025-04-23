@@ -10,7 +10,7 @@ const Button = ({ text, variant }) => {
 
   return (
     <button
-      className={`px-4 rounded-full font-extrabold text-sm transition duration-300 border ${
+      className={`px-4 rounded-full font-extrabold text-2xl transition duration-300 border ${
         variantClasses[variant] || "bg-gray-200 text-gray-800"
       }`}
     >

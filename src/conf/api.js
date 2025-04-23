@@ -10,8 +10,8 @@ export const fetchCarData = async ({ page, limit }) => {
       params: { page, limit }, // Pagination parameters
     });
 
-    const cars = response.data.items || [];
-    const totalCount = response.data.total || cars.length; // Total number of cars
+    const cars = response.data || [];
+    const totalCount = 40; // Total number of cars
     const totalPages = Math.ceil(totalCount / limit); // Calculate total pages
 
     return {

@@ -56,3 +56,17 @@ h3 {
 p {
   line-height: 114.99999999999999%;
 }
+
+.mySwiper {
+  height: 50rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev,
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  all: unset !important;
+}
+.swiper-button-prev {
+  margin: 0 1rem !important;
+}

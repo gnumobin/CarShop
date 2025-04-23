@@ -90,10 +90,10 @@ function Header() {
 
         {/* Navigation Links */}
         <div className="mt-16 px-4 space-y-4 text-2xl">
-          <NavLink href="/sobre" isActive={isActive("/sobre")} onClick={closeMenu}>
+          <NavLink href="/" isActive={isActive("/")} onClick={closeMenu}>
             Sobre
           </NavLink>
-          <NavLink href="/contate" isActive={isActive("/contate")} onClick={closeMenu}>
+          <NavLink href="/car" isActive={isActive("/car")} onClick={closeMenu}>
             Contate
           </NavLink>
           <NavLink href="/anunciar" isActive={isActive("/anunciar")} onClick={closeMenu}>

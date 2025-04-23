@@ -2,7 +2,7 @@ import React from "react";
 
 const Aside = () => {
   return (
-    <div className="p-4 md:p-8">
+    <div className="p-4 md:p-8 md:w-1/3">
       {/* Brand Name */}
       <h2 className="text-sm sm:text-lg md:text-[2.4rem] font-bold uppercase text-line tracking-widest mb-[1rem]">Toyota</h2>
 

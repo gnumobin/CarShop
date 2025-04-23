@@ -10,7 +10,7 @@ const CarCard = ({ car }) => {
         <img
           src={car.main_image}
           alt={car.model}
-          className="w-full h-48 sm:h-64 object-cover rounded-[1.5rem]"
+          className="w-110 h-64 object-cover rounded-[1.5rem]"
         />
 
       {/* Car Details */}

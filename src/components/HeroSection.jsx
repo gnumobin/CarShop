@@ -33,11 +33,11 @@ const HeroSection = () => {
       </div>
 
       {/* Right Side - Car Image */}
-      <div className="w-full md:w-1/2 lg:w-7/12 relative translate-x-[2.5%] sm:translate-x-20 md:translate-x-30">
+      <div className="w-full md:w-1/2 lg:w-7/12 relative">
         <img
           src={Pic}
           alt="Toyota SW4 Diamond"
-          className="w-full h-auto object-cover"
+          className="w-full h-auto object-cover translate-x-[2.5%] sm:translate-x-20 md:translate-x-30"
         />
       </div>
     </section>

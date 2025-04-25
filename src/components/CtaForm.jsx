@@ -26,7 +26,7 @@ function CtaForm() {
   };
   return (
     <div className="bg-forground">
-      <section className="max-w-[112rem] mx-auto p-6 border-b border-line-light pb-[7rem] pt-[10rem] px-16 md:px-0">
+      <section className="container mx-auto p-6 border-b border-line-light pb-[7rem] pt-[10rem]">
         {/* Heading and Description */}
         <div className="mb-8 md:mb-[5rem] space-y-[1rem]">
           <h2 className="text-2xl font-bold sm:text-3xl md:text-6xl md:w-1/2">

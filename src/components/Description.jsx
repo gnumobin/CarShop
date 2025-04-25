@@ -2,7 +2,7 @@ import React from "react";
 
 const Description = () => {
   return (
-    <div className="p-4 md:p-8">
+    <div className="p-4 md:p-8 md:w-2/3">
       {/* Feature List */}
       <ul className="list-none pl-5 sm:pl-6 space-y-2 sm:space-y-[1.4rem] text-primary text-sm sm:text-base md:text-3xl">
         <li>

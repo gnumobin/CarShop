@@ -35,6 +35,12 @@ body {
 @utility container {
   max-width: 128rem;
   margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@utility box {
+  max-width: 128rem;
+  margin: 0 auto;
 }
 
 html {
@@ -59,6 +65,18 @@ p {
 
 .mySwiper {
   height: 50rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .mySwiper {
+    height: 35rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mySwiper {
+    height: 20rem;
+  }
 }
 
 .swiper-button-next,

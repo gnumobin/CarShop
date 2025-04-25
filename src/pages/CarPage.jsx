@@ -8,17 +8,17 @@ function CarPage() {
   return (
     <div>
       <HeroSection />
-      <div className="flex flex-col md:flex-row justify-between">
+      <div className="flex flex-col md:flex-row justify-between pl-[1rem] sm:pl-[2.5rem] pb-[5rem] sm:pb-[20rem]">
         <Aside />
         <ImageSlider />
       </div>
-      <div className="grid grid-cols-2 container justify-between">
-        <Aside />
-        <Description />
-      </div>
-      <div className="flex flex-col md:flex-row justify-between">
+      <div className="flex flex-col md:flex-row justify-between pl-[1rem] sm:pl-[2.5rem] pb-[5rem] sm:pb-[20rem]">
         <Aside />
         <Features />
+      </div>
+      <div className="flex flex-col md:flex-row justify-between pl-[1rem] sm:pl-[2.5rem] pb-[5rem] sm:pb-[20rem]">
+        <Aside />
+        <Description />
       </div>
     </div>
   );

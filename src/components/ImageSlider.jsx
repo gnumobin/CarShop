@@ -13,7 +13,7 @@ const ImageSlider = () => {
   const images = [Pic, Pic, Pic];
 
   return (
-    <div className="md:w-2/3 h-[50rem] relative mb-[15rem]">
+    <div className="md:w-2/3 relative mb-[15rem]">
       {/* Swiper Container */}
       <Swiper
         spaceBetween={10} // Space between slides

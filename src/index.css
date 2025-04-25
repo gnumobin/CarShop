@@ -29,7 +29,7 @@ body {
   --text-3-5xl: 1.9rem;
   --text-4xl: 2rem;
   --text-6xl: 3.6rem;
-  --tracking-custom: 114.99999999999999%;
+  --tracking-custom: 14%;
 }
 
 @utility container {
@@ -49,7 +49,6 @@ html {
 
 button {
   cursor: pointer;
-  letter-spacing: 114.99999999999999%;
 }
 
 h1,
@@ -87,4 +86,9 @@ p {
 }
 .swiper-button-prev {
   margin: 0 1rem !important;
+}
+
+.bg-custom {
+  background: url(./assets/img/behind.jpg);
+  background-size: cover;
 }

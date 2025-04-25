@@ -1,4 +1,5 @@
 import CarList from "../components/Car/CarList";
+import CtaForm from "../components/CtaForm";
 import FilterForm from "../components/FilterForm";
 
 function CarsPage() {
@@ -11,6 +12,7 @@ function CarsPage() {
         <FilterForm />
         <CarList />
       </div>
+      <CtaForm />
     </>
   );
 }

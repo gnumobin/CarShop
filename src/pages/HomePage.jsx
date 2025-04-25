@@ -11,6 +11,7 @@ import VendasPic2 from "../assets/img/vendas/2.jpg";
 import VendasPic3 from "../assets/img/vendas/3.jpg";
 
 import { FaCheck, FaChevronRight } from "react-icons/fa";
+import CtaForm from "../components/CtaForm";
 
 function HomePage() {
   const pictures = [
@@ -52,6 +53,7 @@ function HomePage() {
     <div>
       <HomeHero />
       <ModelCars pictures={pictures} title={"Modelos"} />
+      <CtaForm />
       <FeaturedCar />
       <ModelCars pictures={vendas} title={"Últimas vendas"} />
     </div>

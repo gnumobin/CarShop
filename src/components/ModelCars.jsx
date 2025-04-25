@@ -4,7 +4,7 @@ const ModelCards = ({ pictures, title }) => {
   // const pictures = [Pic, Pic, Pic];
 
   return (
-    <section className="py-8">
+    <section className="py-8 pb-[10rem]">
       <div className="container mx-auto px-4">
         {/* Heading */}
         <h2 className="text-xl md:text-2xl lg:text-6xl font-semibold mb-[5rem] text-center md:text-left">
@@ -21,7 +21,7 @@ const ModelCards = ({ pictures, title }) => {
               <img
                 src={pic.src}
                 alt="Car Image"
-                className="w-full md:h-full object-cover"
+                className="w-full h-full object-cover"
               />
               <div className="px-[4rem] pb-[2rem] absolute bottom-0 flex items-center justify-between w-full">
                 <h3 className="text-base md:text-lg lg:text-4xl font-semibold text-white mb-2 ">

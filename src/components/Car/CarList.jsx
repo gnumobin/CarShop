@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCarData } from "../../conf/api";
 import usePaginationStore from "../../store/usePaginationStore";
 import PaginationHandler from "../PaginationHandler";
+import Loading from '../../assets/img/loading.gif'
 
 const CarList = () => {
   // Extract state and actions from the Zustand store
@@ -26,24 +27,11 @@ const CarList = () => {
     }
   }, [data?.totalPages, setTotalPages]);
 
-  // Handle page change
-  const handleChangePage = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  // Previous Page Button
-  const handlePrevPage = () => {
-    handleChangePage(currentPage - 1);
-  };
-
-  // Next Page Button
-  const handleNextPage = () => {
-    handleChangePage(currentPage + 1);
-  };
-
   // Loading State
   if (isLoading) {
-    return <div className="text-gray-500">Carregando...</div>;
+    return <div className="flex justify-center w-full text-center">
+      <img src={Loading} alt="loading effect" />
+    </div>;
   }
 
   // Error State

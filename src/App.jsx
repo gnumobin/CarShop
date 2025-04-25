@@ -6,6 +6,7 @@ import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 import CarPage from "./pages/CarPage";
 import CarsPage from "./pages/CarsPage";
 import HomePage from "./pages/HomePage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   return (
@@ -15,8 +16,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/cars" element={<CarsPage />} />
         <Route path="/car/:id" element={<CarPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
-      <CtaForm />
       <Footer />
       <ScrollUpButton />
     </>

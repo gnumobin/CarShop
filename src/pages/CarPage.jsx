@@ -6,6 +6,8 @@ import HeroSection from "../components/HeroSection";
 import ImageSlider from "../components/ImageSlider";
 import { fetchCarDetailsById } from "../conf/api";
 import { useQuery } from "@tanstack/react-query";
+import CtaForm from "../components/CtaForm";
+import Loading from '../assets/img/loading.gif'
 
 function CarPage() {
   // Extract the car ID from the URL
@@ -19,7 +21,11 @@ function CarPage() {
 
   // Handle loading state
   if (isLoading) {
-    return <div className="text-gray-500">Carregando...</div>;
+    return (
+      <div className="flex justify-center w-full text-center">
+        <img src={Loading} alt="loading effect" />
+      </div>
+    );
   }
 
   // Handle error state
@@ -44,7 +50,7 @@ function CarPage() {
       <HeroSection data={data} />
       <div className="flex flex-col md:flex-row justify-between pl-[1rem] sm:pl-[2.5rem] pb-[5rem] sm:pb-[20rem]">
         <Aside brand={make} model={name} />
-        <ImageSlider images={images}/>
+        <ImageSlider images={images} />
       </div>
       <div className="flex flex-col md:flex-row justify-between pl-[1rem] sm:pl-[2.5rem] pb-[5rem] sm:pb-[20rem]">
         <Aside brand={make} model={name} />
@@ -54,6 +60,8 @@ function CarPage() {
         <Aside brand={make} model={name} />
         <Description />
       </div>
+
+      <CtaForm />
     </div>
   );
 }

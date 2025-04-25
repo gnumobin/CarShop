@@ -4,7 +4,7 @@ import Pic2 from '../assets/img/behind.jpg';
 
 const FeaturedCar = () => {
   return (
-    <section className="bg-white py-6 md:py-8">
+    <section className="bg-white py-6 md:py-[6rem]">
       <div className="container mx-auto px-4">
         {/* Heading */}
         <h2 className="text-xl md:text-2xl lg:text-6xl font-semibold mb-[5rem] text-center md:text-left">

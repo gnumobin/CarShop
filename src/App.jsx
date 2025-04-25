@@ -7,6 +7,7 @@ import CarPage from "./pages/CarPage";
 import CarsPage from "./pages/CarsPage";
 import HomePage from "./pages/HomePage";
 import ContactPage from "./pages/ContactPage";
+import AlertPage from "./pages/AlertPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/cars" element={<CarsPage />} />
         <Route path="/car/:id" element={<CarPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/alert" element={<AlertPage />} />
       </Routes>
       <Footer />
       <ScrollUpButton />

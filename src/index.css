@@ -59,7 +59,7 @@ h3 {
 }
 
 p {
-  line-height: 114.99999999999999%;
+  line-height: 1.4;
 }
 
 .mySwiper {
@@ -91,4 +91,8 @@ p {
 .bg-custom {
   background: url(./assets/img/behind.jpg);
   background-size: cover;
+}
+.bg-custom-2 {
+  background: url(./assets/img/black-bg.png);
+  background-size: contain;
 }

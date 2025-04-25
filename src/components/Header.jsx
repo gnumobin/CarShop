@@ -55,7 +55,7 @@ function Header() {
           <NavLink href="/cars" isActive={isActive("/cars")} onClick={closeMenu}>
             Anunciar
           </NavLink>
-          <NavLink href="/estoque" isActive={isActive("/estoque")} onClick={closeMenu}>
+          <NavLink href="/alert" isActive={isActive("/alert")} onClick={closeMenu}>
             Estoque
           </NavLink>
         </div>
@@ -99,7 +99,7 @@ function Header() {
           <NavLink href="/cars" isActive={isActive("/cars")} onClick={closeMenu}>
             Anunciar
           </NavLink>
-          <NavLink href="/estoque" isActive={isActive("/estoque")} onClick={closeMenu}>
+          <NavLink href="/alert" isActive={isActive("/alert")} onClick={closeMenu}>
             Estoque
           </NavLink>
         </div>

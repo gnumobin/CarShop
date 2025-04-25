@@ -8,9 +8,10 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import Pic from "../assets/img/gallery.png";
 
-const ImageSlider = () => {
+const ImageSlider = ({images}) => {
   // Sample images for demonstration
-  const images = [Pic, Pic, Pic];
+
+  console.log(images)
 
   return (
     <div className="md:w-2/3 relative mb-[15rem]">
@@ -30,7 +31,7 @@ const ImageSlider = () => {
         {images.map((image, idx) => (
           <SwiperSlide key={idx}>
             <img
-              src={image}
+              src={image.image_url}
               alt={`Image ${idx + 1}`}
               className="w-full h-full object-cover rounded-[1.5rem]"
             />

@@ -1,6 +1,18 @@
 import React from "react";
 
-const Features = () => {
+const Features = ({ data }) => {
+  const {
+    seats,
+    motor,
+    torque,
+    zero_to_hundred,
+    fuel,
+    max_speed,
+    color,
+    trunk_space,
+    interior,
+    traction,
+  } = data;
   return (
     <div className=" p-4 md:p-[8rem] rounded-l-[2.5rem] border border-[rgba(0,0,0,.2)] md:w-2/3">
       {/* Ensure Full Width with Grid Layout */}
@@ -11,7 +23,7 @@ const Features = () => {
             MOTOR
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            2.8 4 CILINDROS
+            {motor}
           </span>
         </div>
 
@@ -31,7 +43,7 @@ const Features = () => {
             TORQUE
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            50,9KGFM
+            {torque}
           </span>
         </div>
 
@@ -51,7 +63,7 @@ const Features = () => {
             TRAÇÃO
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            INTEGRAL
+            {traction}
           </span>
         </div>
 
@@ -61,7 +73,7 @@ const Features = () => {
             0-100KM/H
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            11,8S
+            {zero_to_hundred}
           </span>
         </div>
 
@@ -71,7 +83,7 @@ const Features = () => {
             VELOCIDADE MÁXIMA
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            180KM/H
+            {max_speed}
           </span>
         </div>
 
@@ -81,14 +93,14 @@ const Features = () => {
             COR
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            BRANCO LUNAR
+            {color}
           </span>
         </div>
 
         {/* Bancos */}
         <div className="flex flex-col space-y-1 sm:space-y-2 w-full">
           <span className="text-sm sm:text-base md:text-[1.5rem] text-line font-semibold">
-            BANCOS
+            {interior}
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
             COURO CARAMELO
@@ -101,7 +113,7 @@ const Features = () => {
             LUGARES
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            7
+            {seats}
           </span>
         </div>
 
@@ -111,7 +123,7 @@ const Features = () => {
             COMBUSTÍVEL
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            DIESEL
+            {fuel}
           </span>
         </div>
 
@@ -121,7 +133,7 @@ const Features = () => {
             PORTA-MALAS
           </span>
           <span className="text-base sm:text-lg md:text-4xl font-extrabold w-full">
-            500L
+            {trunk_space}
           </span>
         </div>
       </div>

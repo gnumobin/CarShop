@@ -1,16 +1,16 @@
 import React from "react";
 
-const Aside = () => {
+const Aside = ({brand, model}) => {
   return (
     <div className="p-4 md:p-8 md:w-1/3">
       {/* Brand Name */}
       <h2 className="text-sm sm:text-lg md:text-[2.4rem] font-bold uppercase text-line tracking-widest mb-[1rem]">
-        Toyota
+        {brand}
       </h2>
 
       {/* Model Name */}
       <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[4rem] tracking-wide font-extrabold mb-6 md:mb-[5rem]">
-        SW4 Diamond
+        {model}
       </h1>
 
       {/* Navigation Menu */}

@@ -12,7 +12,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/car" element={<CarPage />} />
+        <Route path="/car/:id" element={<CarPage />} />
       </Routes>
       <CtaForm />
       <Footer />

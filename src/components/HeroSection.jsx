@@ -1,10 +1,9 @@
 import { FaChevronDown } from "react-icons/fa";
-import Pic from "../assets/img/car2.png";
 
 const HeroSection = ({data}) => {
   return (
     <section className="">
-      <div className="flex flex-col md:flex-row items-center justify-between sm:pl-[5.5rem] pt-20 px-10 xl:pt-0">
+      <div className="flex flex-col md:flex-row items-center justify-between sm:pl-[5.5rem] pt-20 px-10 xl:pt-0 mt-20 xl:mt-0">
         {/* Left Side - Text Information */}
         <div className="w-full md:w-1/2 lg:w-5/12 mb-6 md:mb-0 text-center md:text-left">
           <h2 className="text-lg sm:text-[2.4rem] font-extrabold uppercase mb-[1rem] text-line tracking-widest">

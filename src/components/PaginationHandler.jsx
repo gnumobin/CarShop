@@ -26,7 +26,8 @@ const PaginationHandler = () => {
     <div className="flex flex-col items-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 justify-center text-4xl open-sans mt-[5.2rem]">
       <div className="flex gap-[2.5rem] items-center justify-between bg-forground px-[1.8rem] py-[1.35rem] rounded-[2.5rem]">
         <span className="text-line">
-          Página <strong className="text-primary">{currentPage}</strong> de <strong>{totalPages}</strong>
+          Página <strong className="text-primary">{currentPage}</strong> de{" "}
+          <strong>{totalPages}</strong>
         </span>
         <div className="flex space-x-2 text-5xl">
           <button

@@ -8,98 +8,120 @@ const FilterForm = () => {
   // Function to handle input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    updateField(name, type === "checkbox" ? checked : value);
+    updateField(name, (type === "checkbox" ? checked : value) || null);
   };
 
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Filter Data:", formData);
+    // console.log("Filter Data:", formData);
     // You can add validation or API calls here
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="border px-[5rem] pt-[3rem] pb-[10rem] rounded-[2.5rem] border-[rgba(0,0,0,.2)] md:w-1/3 md:text-2xl space-y-[2rem]"
+      className="border p-12 rounded-[2.5rem] border-[rgba(0,0,0,.2)] md:w-1/3 md:min-w-1/3 md:text-2xl space-y-[2rem]"
     >
       {/* Header */}
       <div className="flex justify-between mb-4">
-        <span className="text-primary font-semibold text-xl">MARCAS</span>
-        <span className="text-primary font-semibold text-xl">MODELOS</span>
+        <span className="text-primary font-semibold text-xl">MARCA</span>
+        <span className="text-primary font-semibold text-xl">MODELO</span>
       </div>
 
-      {/* Dropdowns for Marcas and Modelos */}
+      {/* Dropdowns for Make and Model */}
       <div className="grid grid-cols-1 gap-4 md:gap-[4.5rem] sm:grid-cols-2 items-center">
         <select
-          name="marcas"
-          value={formData.marcas}
+          name="make"
+          value={formData.make}
           onChange={handleChange}
           className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl focus:outline-none focus:border-blue-500 md:text-2xl"
         >
-          <option value="Todas">Todas</option>
+          <option value="">-- Todas --</option>
           <option value="Toyota">Toyota</option>
           <option value="Honda">Honda</option>
           <option value="Ford">Ford</option>
         </select>
         <select
-          name="modelos"
-          value={formData.modelos}
+          name="model"
+          value={formData.model}
           onChange={handleChange}
           className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl focus:outline-none focus:border-blue-500"
         >
-          <option value="Todas">Todas</option>
+          <option value="">-- Todos --</option>
           <option value="Corolla">Corolla</option>
           <option value="Civic">Civic</option>
           <option value="Focus">Focus</option>
         </select>
       </div>
 
-      {/* Header */}
-      <div className="flex justify-between mb-4">
-        <span className="text-primary font-semibold text-xl">MARCAS</span>
-        <span className="text-primary font-semibold text-xl">MODELOS</span>
-      </div>
-
-      {/* Dropdowns for Marcas and Modelos */}
-      <div className="grid grid-cols-1 gap-4 md:gap-[4.5rem] sm:grid-cols-2 items-center">
-        <select
-          name="marcas"
-          value={formData.marcas}
-          onChange={handleChange}
-          className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl focus:outline-none focus:border-blue-500"
+      {/* Motor Type */}
+      <div className="mb-4">
+        <label
+          htmlFor="motor"
+          className="text-primary font-semibold text-xl block mb-2"
         >
-          <option value="Todas">Todas</option>
-          <option value="Toyota">Toyota</option>
-          <option value="Honda">Honda</option>
-          <option value="Ford">Ford</option>
-        </select>
+          MOTORIZAÇÃO
+        </label>
         <select
-          name="modelos"
-          value={formData.modelos}
+          name="motor"
+          value={formData.motor}
           onChange={handleChange}
-          className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl focus:outline-none focus:border-blue-500"
+          className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl w-full focus:outline-none focus:border-blue-500"
         >
-          <option value="Todas">Todas</option>
-          <option value="Corolla">Corolla</option>
-          <option value="Civic">Civic</option>
-          <option value="Focus">Focus</option>
+          <option value="">-- Todos --</option>
+          <option value="V6">V6</option>
+          <option value="V8">V8</option>
+          <option value="Electric Motor">Motor Elétrico</option>
         </select>
       </div>
 
-      {/* Ano Range */}
+      {/* Checkboxes for Electric and Bulletproof */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="is_electric"
+            name="is_electric"
+            checked={formData.is_electric}
+            onChange={handleChange}
+            className="w-5 h-5 mr-2"
+          />
+          <label htmlFor="is_electric" className="text-primary font-semibold">
+            ELÉTRICO
+          </label>
+        </div>
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="is_bulletproof"
+            name="is_bulletproof"
+            checked={formData.is_bulletproof}
+            onChange={handleChange}
+            className="w-5 h-5 mr-2"
+          />
+          <label
+            htmlFor="is_bulletproof"
+            className="text-primary font-semibold"
+          >
+            BLINDADO
+          </label>
+        </div>
+      </div>
+
+      {/* Year Range */}
       <div className="grid grid-cols-1 gap-4 sm:flex items-center">
         <div>
           <label
-            htmlFor="anoInicial"
+            htmlFor="min_year"
             className="text-primary font-semibold text-xl block mb-2"
           >
             ANO
           </label>
           <input
             type="number"
-            name="anoInicial"
-            value={formData.anoInicial}
+            name="min_year"
+            value={formData.min_year}
             onChange={handleChange}
             placeholder="2020"
             className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl w-full focus:outline-none focus:border-blue-500"
@@ -112,8 +134,8 @@ const FilterForm = () => {
           </label>
           <input
             type="number"
-            name="anoFinal"
-            value={formData.anoFinal}
+            name="max_year"
+            value={formData.max_year}
             onChange={handleChange}
             placeholder="2025"
             className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl w-full focus:outline-none focus:border-blue-500"
@@ -121,19 +143,19 @@ const FilterForm = () => {
         </div>
       </div>
 
-      {/* Valor Range */}
+      {/* Price Range */}
       <div className="grid grid-cols-1 gap-4 sm:flex items-center">
         <div>
           <label
-            htmlFor="valorMinimo"
+            htmlFor="min_price"
             className="text-primary font-semibold text-xl block mb-2"
           >
             VALOR
           </label>
           <input
             type="number"
-            name="valorMinimo"
-            value={formData.valorMinimo}
+            name="min_price"
+            value={formData.min_price}
             onChange={handleChange}
             placeholder="100.000"
             className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl w-full focus:outline-none focus:border-blue-500"
@@ -146,8 +168,8 @@ const FilterForm = () => {
           </label>
           <input
             type="number"
-            name="valorMaximo"
-            value={formData.valorMaximo}
+            name="max_price"
+            value={formData.max_price}
             onChange={handleChange}
             placeholder="4.250.000"
             className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl w-full focus:outline-none focus:border-blue-500"
@@ -155,21 +177,21 @@ const FilterForm = () => {
         </div>
       </div>
 
-      {/* Quilometragem Range */}
+      {/* Speed Range */}
       <div className="grid grid-cols-1 gap-4 sm:flex items-center">
         <div>
           <label
-            htmlFor="quilometragemMinima"
+            htmlFor="min_speed"
             className="text-primary font-semibold text-xl block mb-2"
           >
-            QUILOMETRAGEM
+            VELOCIDADE
           </label>
           <input
             type="number"
-            name="quilometragemMinima"
-            value={formData.quilometragemMinima}
+            name="min_speed"
+            value={formData.min_speed}
             onChange={handleChange}
-            placeholder="0km"
+            placeholder="0 km/h"
             className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl w-full focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -180,10 +202,10 @@ const FilterForm = () => {
           </label>
           <input
             type="number"
-            name="quilometragemMaxima"
-            value={formData.quilometragemMaxima}
+            name="max_speed"
+            value={formData.max_speed}
             onChange={handleChange}
-            placeholder="50.000km"
+            placeholder="300 km/h"
             className="border border-thin px-[1.5rem] py-[.8rem] rounded-xl w-full focus:outline-none focus:border-blue-500"
           />
         </div>

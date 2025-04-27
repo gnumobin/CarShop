@@ -1,17 +1,17 @@
 import axios from "axios";
 
 // Base URL for the API
-const BASE_URL = "https://api-cars.abolfazlrabiei.ir/api/cars/";
+const BASE_URL = "https://api-cars.abolfazlrabiei.ir/api/filter/";
 
 // Function to fetch car data with pagination
-export const fetchCarData = async ({ page, limit }) => {
+export const fetchCarData = async ({ page, limit, ...formData }) => {
   try {
     const response = await axios.get(BASE_URL, {
-      params: { page, limit }, // Pagination parameters
+      params: { page, limit, ...formData }, // Pagination parameters
     });
 
-    const cars = response.data || [];
-    const totalCount = 40; // Total number of cars
+    const cars = response.data.items || [];
+    const totalCount = response.data.total || 0; // Total number of cars
     const totalPages = Math.ceil(totalCount / limit); // Calculate total pages
 
     return {

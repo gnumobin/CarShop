@@ -1,13 +1,3 @@
-Sure! Here's a complete `.md` file you can save as `README.md` in your project root. It includes:
-
-- Project description
-- Features
-- Setup instructions
-- Example requests
-- Tech stack
-- Future improvements
-
----
 
 ### ✅ README.md (Save this in your project root)
 

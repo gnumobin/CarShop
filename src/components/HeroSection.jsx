@@ -7,10 +7,10 @@ const HeroSection = ({ data }) => {
         {/* Left Side - Text Information */}
         <div className="w-full md:w-1/2 lg:w-5/12 mb-6 md:mb-0 text-center md:text-left">
           <h2 className="text-lg sm:text-[2.4rem] font-extrabold uppercase mb-[1rem] text-line tracking-widest">
-            {data.make}
+            {data.name}
           </h2>
           <h1 className="text-2xl sm:text-3xl md:text-[4rem] font-extrabold mb-[5rem] tracking-wider">
-            {data.name}
+            {data.make}
           </h1>
           <div className="flex justify-center md:justify-stretch gap-[3rem] items-center mb-[4.4rem]">
             {/* Ano */}

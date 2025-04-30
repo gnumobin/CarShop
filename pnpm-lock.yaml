@@ -14,6 +14,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.74.4
         version: 5.74.4(react@19.1.0)
+      alertifyjs:
+        specifier: ^1.14.0
+        version: 1.14.0
       axios:
         specifier: ^1.8.4
         version: 1.8.4
@@ -635,6 +638,9 @@ packages:
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
+
+  alertifyjs@1.14.0:
+    resolution: {integrity: sha512-jUxJTcNYhJ2P1Wal73nmyTwMkaPim4PjZP9CAG+S8SK2SinraXxvOxnPrEY81/wc2iBPDFBP7mdg61db4WsuHQ==}
 
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
@@ -1959,6 +1965,8 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+
+  alertifyjs@1.14.0: {}
 
   ansi-styles@4.3.0:
     dependencies:

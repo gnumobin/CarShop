@@ -1,28 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
+import "alertifyjs/build/css/alertify.css";
+import alertify from "alertifyjs";
 import { createNewCar } from "../../conf/api";
-import Modal from "react-modal";
 
 function Login() {
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState();
+  const [image, setImage] = useState();
   const [loginState, setLoginState] = useState(true);
 
   const loginHandler = (e) => {
@@ -40,18 +26,12 @@ function Login() {
   const create = (e) => {
     e.preventDefault();
     createNewCar();
-    openModal()
-  };
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
+    if (image) {
+      alertify.alert("Succsess");
+    } else {
+      alertify.alert("Try");
+    }
   };
 
   if (loginState === true) {
@@ -95,15 +75,6 @@ function Login() {
   if (loginState === false) {
     return (
       <>
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          Succsess
-        </Modal>
         <form
           action="#"
           onSubmit={create.bind(this)}
@@ -113,7 +84,7 @@ function Login() {
             <input
               type="text"
               id="carName"
-              placeholder="Enter the car name"
+              placeholder="Name"
               className="border border-gray-300 p-4 rounded-2xl w-full text-[1.8rem]"
             />
           </label>
@@ -145,13 +116,16 @@ function Login() {
             <input
               type="text"
               id="brand"
-              placeholder="model"
+              placeholder="brand"
               className="border border-gray-300 p-4 rounded-2xl w-full text-[1.8rem]"
             />
           </label>
           <label htmlFor="#">
             <input
               type="file"
+              accept="image/jpeg, image/png, image/gif"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
               id="file-input"
               className="border border-gray-300 p-4 rounded-2xl w-full text-[1.8rem]"
             />

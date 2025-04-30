@@ -61,9 +61,11 @@ export async function createNewCar() {
     price: priceInput.value,
   };
 
+
   // Simulate file upload (in browser, this comes from <input type="file">)
   const fileInput = document.querySelector("#file-input"); // Use an HTML input to select the file
   const file = fileInput.files[0] || IMAGE_FILE_PATH;
+
 
   if (!file) {
     console.error("No file selected.");
@@ -71,8 +73,12 @@ export async function createNewCar() {
   }
 
   const formData = new FormData();
+  
   formData.append("car_data", JSON.stringify(carData)); // Send JSON string
   formData.append("main_image", file); // Append the file
+
+  console.log(carData)
+
 
   try {
     console.log("Sending request...");

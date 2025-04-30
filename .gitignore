@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# python ignores
+backend/venv/
+backend/test.py
+backend/1.jpg

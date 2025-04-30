@@ -43,7 +43,7 @@ async def create_car(
     """
     try:
         # Parse the JSON string into the CarCreate model
-        car = CarCreate.parse_raw(car_data)  # Deserialize and validate
+        car = CarCreate.model_validate_json(car_data)  # Deserialize and validate
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Invalid car data: {str(e)}")
 
@@ -114,10 +114,10 @@ async def get_car(car_id: int, db: AsyncSession = Depends(get_db)):
     return car
 
 
-@router.get("/cars", response_model=List[CarResponse])
+@router.get("/cars", response_model=PaginatedCarResponse)
 async def get_all_cars(
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(10, ge=1, le=100, description="Items per page"),
+    limit: int = Query(10, ge=1, le=100, description="Items per page"),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -128,20 +128,29 @@ async def get_all_cars(
         db (AsyncSession): An asynchronous database session.
 
     Returns:
-        List[CarResponse]: List of cars.
+        List[PaginatedCarResponse]: List of cars.
     """
-    offset = (page - 1) * page_size
+    offset = (page - 1) * limit
     # Base query to fetch cars with their associated images
     stmt = select(Car).options(selectinload(Car.images))
 
+    total_query = select(func.count()).select_from(stmt.subquery().alias())
+    total_result = await db.execute(total_query)
+    total = total_result.scalar()
+
     # Apply pagination using only page_size
-    stmt = stmt.offset(offset).limit(page_size)
+    stmt = stmt.offset(offset).limit(limit)
 
     # Execute query
     result = await db.execute(stmt)
     cars = result.scalars().all()
 
-    return cars
+    return {
+        "items": cars,
+        "total": total,
+        "page": page,
+        "page_size": limit
+    }
 
 @router.get("/filter", response_model=PaginatedCarResponse)
 async def get_filtered_cars(

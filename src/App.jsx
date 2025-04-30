@@ -9,7 +9,6 @@ import HomePage from "./pages/HomePage";
 import ContactPage from "./pages/ContactPage";
 import AlertPage from "./pages/AlertPage";
 import Login from "./components/Panel/Login";
-import Panel from "./components/Panel/Panel";
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/alert" element={<AlertPage />} />
         <Route path="/panel" element={<Login />} />
-        <Route path="/manage" element={<Panel />} />
       </Routes>
       <Footer />
       <ScrollUpButton />

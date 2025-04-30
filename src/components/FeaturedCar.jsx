@@ -12,7 +12,7 @@ const FeaturedCar = () => {
         </h2>
 
         {/* Featured Car Section */}
-        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-[4rem]">
+        <div className="flex flex-col justify-stretch md:flex-row items-stretch gap-4 md:gap-[4rem]">
           {/* Image */}
           <div className="w-full md:w-2/3 rounded-[2.5rem] overflow-hidden">
             <img

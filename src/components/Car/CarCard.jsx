@@ -4,7 +4,6 @@ import Button from "../../utils/Button";
 import { Link } from "react-router";
 
 const CarCard = ({ car }) => {
-  console.log(car);
   return (
     <div className="border border-line-super-light rounded-[2.5rem] overflow-hidden p-[2rem] pb-0">
       {/* Car Image */}

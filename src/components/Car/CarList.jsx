@@ -14,7 +14,7 @@ const CarList = () => {
   // Fetch car data using TanStack Query
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["cars", currentPage], // Include currentPage in the query key
-    queryFn: () => fetchCarData({ page: currentPage, limit: 10 }), // Fetch 10 items per page
+    queryFn: () => fetchCarData({ page: currentPage, limit: 9 }), // Fetch 10 items per page
   });
 
   // Log the fetched data for debugging

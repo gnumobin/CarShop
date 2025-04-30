@@ -5,6 +5,33 @@ from sqlalchemy.orm import relationship
 # Base class for declarative models
 Base = declarative_base()
 
+
+class User(Base):
+    """
+    Represents an application user.
+
+    Attributes:
+        id (int): Primary key and unique identifier for the user.
+        username (str): Unique username for login.
+        email (str): Email address of the user.
+        full_name (str): Full name of the user.
+        hashed_password (str): Hashed password for secure storage.
+        is_active (bool): Indicates if the user account is active.
+        is_superuser (bool): Indicates if the user has admin privileges.
+        cars (relationship): Relationship to associated `Car` objects.
+    """
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=True)
+    full_name = Column(String, nullable=True)
+    hashed_password = Column(String, nullable=False)
+    is_active = Column(Boolean, default=True)
+    is_superuser = Column(Boolean, default=False)
+
+    # Optional: Link cars to users
+    cars = relationship("Car", back_populates="owner")
 class Car(Base):
     """
     Represents a car with detailed specifications.
@@ -56,6 +83,9 @@ class Car(Base):
 
     # Relationship to CarImage
     images = relationship("CarImage", back_populates="car", lazy="select")
+
+    owner_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    owner = relationship("User", back_populates="cars")
 
 class CarImage(Base):
     """

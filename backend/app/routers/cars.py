@@ -4,12 +4,13 @@ from sqlalchemy.sql import func
 from sqlalchemy import Integer , String
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload , defer
 from typing import List
 from app.config import BUCKET_NAME, ACCESS_KEY, SECRET_KEY, ENDPOINT , CLOUD_CUSTOM_PREFIX
 from app.database import get_db
-from app.models import Car, CarImage
+from app.models import Car, CarImage , User
 from urllib.parse import urlparse
+from app.auth import get_current_user
 from app.schemas import CarCreate, CarUpdate, CarResponse , PaginatedCarResponse
 import uuid
 import boto3
@@ -30,7 +31,8 @@ s3_client = boto3.client(
 async def create_car(
     main_image: UploadFile = File(...),           # File upload for main_image
     car_data: str = Form(...),                   # Car data as a JSON string
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
     """
     Create a new car with optional images and a main image.
@@ -71,6 +73,7 @@ async def create_car(
     # Create the car object including the main image URL
     car_dict = car.model_dump(exclude={"images"})
     car_dict["main_image"] = main_image_url  # Override the main_image field
+    car_dict["owner_id"] = current_user.id
 
     new_car = Car(**car_dict)
     db.add(new_car)
@@ -255,6 +258,7 @@ async def update_car(
     car_data: Annotated[str, Form(...)],  # JSON string of CarUpdate
     main_image: UploadFile | None = File(None),  # Optional new image
     db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
     try:
         car_update = CarUpdate.model_validate_json(car_data)
@@ -267,7 +271,8 @@ async def update_car(
 
     if not car:
         raise HTTPException(status_code=404, detail="Car not found")
-
+    if car.owner_id != current_user.id and not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Not authorized")
     # Update simple fields
     for key, value in car_update.model_dump(exclude_unset=True).items():
         setattr(car, key, value)
@@ -310,7 +315,7 @@ async def update_car(
     return car_with_images
 
 @router.delete("/cars/{car_id}", response_model=dict, status_code=200)
-async def delete_car(car_id: int, db: AsyncSession = Depends(get_db)):
+async def delete_car(car_id: int, db: AsyncSession = Depends(get_db) , current_user: User = Depends(get_current_user)):
     # Fetch car with images
     stmt = select(Car).where(Car.id == car_id).options(selectinload(Car.images))
     result = await db.execute(stmt)
@@ -318,7 +323,8 @@ async def delete_car(car_id: int, db: AsyncSession = Depends(get_db)):
 
     if not car:
         raise HTTPException(status_code=404, detail="Car not found")
-
+    if car.owner_id != current_user.id and not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Not authorized")
     # Collect all image keys
     keys_to_delete = []
 

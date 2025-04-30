@@ -1,6 +1,25 @@
 from pydantic import BaseModel
 from typing import Optional, List
 
+
+class UserBase(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    is_active: Optional[bool] = True
+    is_superuser: Optional[bool] = False
+
+# Used when creating a new user
+class UserCreate(UserBase):
+    password: str
+
+# Used in responses
+class UserResponse(UserBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
 class CarImageResponse(BaseModel):
     """
     Schema for returning car image data.
@@ -74,6 +93,7 @@ class CarResponse(CarBase):
         id (int): Unique identifier for the car.
     """
     id: int
+    owner_id: Optional[int] = None
 
     class Config:
         from_attributes = True  # Allows ORM mode for compatibility with SQLAlchemy models.

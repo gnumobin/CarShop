@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.database import engine
 from app.models import Base
-from app.routers import cars, gallery_cars
+from app.routers import cars, gallery_cars , users
 import uvicorn
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
@@ -34,4 +34,5 @@ app = FastAPI(lifespan=lifespan, middleware=middleware)
 
 # Include routers for cars and gallery endpoints
 app.include_router(cars.router, prefix="/api", tags=["cars"])
+app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(gallery_cars.router, prefix="/api", tags=["gallery"])

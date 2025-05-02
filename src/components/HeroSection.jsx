@@ -1,16 +1,16 @@
 import { FaChevronDown } from "react-icons/fa";
 
-const HeroSection = ({data}) => {
+const HeroSection = ({ data }) => {
   return (
-    <section className="">
-      <div className="flex flex-col md:flex-row items-center justify-between sm:pl-[5.5rem] pt-20 px-10 xl:pt-0 mt-20 xl:mt-0">
+    <section className="container">
+      <div className="flex flex-col md:flex-row items-center justify-between mt-10">
         {/* Left Side - Text Information */}
         <div className="w-full md:w-1/2 lg:w-5/12 mb-6 md:mb-0 text-center md:text-left">
           <h2 className="text-lg sm:text-[2.4rem] font-extrabold uppercase mb-[1rem] text-line tracking-widest">
-            {data.make}
+            {data.name}
           </h2>
           <h1 className="text-2xl sm:text-3xl md:text-[4rem] font-extrabold mb-[5rem] tracking-wider">
-            {data.name}
+            {data.make}
           </h1>
           <div className="flex justify-center md:justify-stretch gap-[3rem] items-center mb-[4.4rem]">
             {/* Ano */}
@@ -38,7 +38,7 @@ const HeroSection = ({data}) => {
           <img
             src={data.main_image}
             alt="Toyota SW4 Diamond"
-            className="w-full h-[20rem] md:h-[45rem]  rounded-2xl object-cover"
+            className="w-full h-[20rem] md:h-[40rem]  rounded-2xl object-cover"
           />
         </div>
       </div>

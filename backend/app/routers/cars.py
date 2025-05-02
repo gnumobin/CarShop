@@ -1,13 +1,16 @@
 from fastapi import APIRouter, Depends, UploadFile, Form,  File, HTTPException , Query
+from typing import Annotated
 from sqlalchemy.sql import func
 from sqlalchemy import Integer , String
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload , defer
 from typing import List
 from app.config import BUCKET_NAME, ACCESS_KEY, SECRET_KEY, ENDPOINT , CLOUD_CUSTOM_PREFIX
 from app.database import get_db
-from app.models import Car, CarImage
+from app.models import Car, CarImage , User
+from urllib.parse import urlparse
+from app.auth import get_current_user
 from app.schemas import CarCreate, CarUpdate, CarResponse , PaginatedCarResponse
 import uuid
 import boto3
@@ -28,7 +31,8 @@ s3_client = boto3.client(
 async def create_car(
     main_image: UploadFile = File(...),           # File upload for main_image
     car_data: str = Form(...),                   # Car data as a JSON string
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
     """
     Create a new car with optional images and a main image.
@@ -43,7 +47,7 @@ async def create_car(
     """
     try:
         # Parse the JSON string into the CarCreate model
-        car = CarCreate.parse_raw(car_data)  # Deserialize and validate
+        car = CarCreate.model_validate_json(car_data)  # Deserialize and validate
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Invalid car data: {str(e)}")
 
@@ -69,6 +73,7 @@ async def create_car(
     # Create the car object including the main image URL
     car_dict = car.model_dump(exclude={"images"})
     car_dict["main_image"] = main_image_url  # Override the main_image field
+    car_dict["owner_id"] = current_user.id
 
     new_car = Car(**car_dict)
     db.add(new_car)
@@ -114,10 +119,10 @@ async def get_car(car_id: int, db: AsyncSession = Depends(get_db)):
     return car
 
 
-@router.get("/cars", response_model=List[CarResponse])
+@router.get("/cars", response_model=PaginatedCarResponse)
 async def get_all_cars(
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(10, ge=1, le=100, description="Items per page"),
+    limit: int = Query(10, ge=1, le=100, description="Items per page"),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -128,20 +133,29 @@ async def get_all_cars(
         db (AsyncSession): An asynchronous database session.
 
     Returns:
-        List[CarResponse]: List of cars.
+        List[PaginatedCarResponse]: List of cars.
     """
-    offset = (page - 1) * page_size
+    offset = (page - 1) * limit
     # Base query to fetch cars with their associated images
     stmt = select(Car).options(selectinload(Car.images))
 
+    total_query = select(func.count()).select_from(stmt.subquery().alias())
+    total_result = await db.execute(total_query)
+    total = total_result.scalar()
+
     # Apply pagination using only page_size
-    stmt = stmt.offset(offset).limit(page_size)
+    stmt = stmt.offset(offset).limit(limit)
 
     # Execute query
     result = await db.execute(stmt)
     cars = result.scalars().all()
 
-    return cars
+    return {
+        "items": cars,
+        "total": total,
+        "page": page,
+        "page_size": limit
+    }
 
 @router.get("/filter", response_model=PaginatedCarResponse)
 async def get_filtered_cars(
@@ -232,85 +246,114 @@ async def get_filtered_cars(
         "page": page,
         "page_size": page_size
     }
+def extract_s3_key(url: str) -> str:
+    """Extract the S3 object key from the full image URL."""
+    parsed_url = urlparse(url)
+    path = parsed_url.path  # e.g., "/cars/uuid.jpg"
+    return path.lstrip("/")
+
 @router.put("/cars/{car_id}", response_model=CarResponse, status_code=200)
-async def update_car(car_id: int, car_data: CarUpdate, db: AsyncSession = Depends(get_db)):
-    """
-    Update an existing car's data.
+async def update_car(
+    car_id: int,
+    car_data: Annotated[str, Form(...)],  # JSON string of CarUpdate
+    main_image: UploadFile | None = File(None),  # Optional new image
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    try:
+        car_update = CarUpdate.model_validate_json(car_data)
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"Invalid car data: {str(e)}")
 
-    Args:
-        car_id (int): The ID of the car to update.
-        car_data (CarUpdate): The updated data for the car.
-        db (AsyncSession): An asynchronous database session.
-
-    Returns:
-        CarResponse: The updated car object with its associated images.
-
-    Raises:
-        HTTPException: If the car is not found.
-    """
     stmt = select(Car).where(Car.id == car_id)
     result = await db.execute(stmt)
     car = result.scalar_one_or_none()
 
     if not car:
         raise HTTPException(status_code=404, detail="Car not found")
-
-    # Update the car's fields
-    for key, value in car_data.model_dump(exclude_unset=True).items():
+    if car.owner_id != current_user.id and not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    # Update simple fields
+    for key, value in car_update.model_dump(exclude_unset=True).items():
         setattr(car, key, value)
 
+    # Handle image upload (if provided)
+    if main_image:
+        # Step 1: Delete old image from S3 if it exists
+        if car.main_image:
+            try:
+                old_image_key = extract_s3_key(car.main_image)
+                s3_client.delete_object(Bucket=BUCKET_NAME, Key=old_image_key)
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=f"Failed to delete old image: {str(e)}")
+
+        # Step 2: Upload new image
+        file_extension = main_image.filename.split('.')[-1]
+        new_image_key = f"cars/{uuid.uuid4()}.{file_extension}"
+        content_type = main_image.content_type or "image/jpeg"
+
+        try:
+            s3_client.upload_fileobj(
+                main_image.file,
+                BUCKET_NAME,
+                new_image_key,
+                ExtraArgs={"ContentType": content_type, "ACL": "public-read"},
+            )
+            car.main_image = f"{CLOUD_CUSTOM_PREFIX}/{new_image_key}"
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Image upload failed: {str(e)}")
+
+    # Commit changes
     await db.commit()
     await db.refresh(car)
 
-    # Retrieve the car with its associated images
+    # Reload with images
     stmt = select(Car).options(selectinload(Car.images)).where(Car.id == car_id)
     result = await db.execute(stmt)
     car_with_images = result.scalar_one_or_none()
 
     return car_with_images
 
-
 @router.delete("/cars/{car_id}", response_model=dict, status_code=200)
-async def delete_car(car_id: int, db: AsyncSession = Depends(get_db)):
-    """
-    Delete a car from the database and its associated files from AWS S3.
-
-    Args:
-        car_id (int): The ID of the car to delete.
-        db (AsyncSession): An asynchronous database session.
-
-    Returns:
-        dict: A success message indicating the car and its files have been deleted.
-
-    Raises:
-        HTTPException: If the car is not found or an error occurs while deleting files from S3.
-    """
-    stmt = select(Car).where(Car.id == car_id)
+async def delete_car(car_id: int, db: AsyncSession = Depends(get_db) , current_user: User = Depends(get_current_user)):
+    # Fetch car with images
+    stmt = select(Car).where(Car.id == car_id).options(selectinload(Car.images))
     result = await db.execute(stmt)
     car = result.scalar_one_or_none()
 
     if not car:
         raise HTTPException(status_code=404, detail="Car not found")
+    if car.owner_id != current_user.id and not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    # Collect all image keys
+    keys_to_delete = []
 
-    # Delete the folder (and all associated files) from AWS S3
-    folder_prefix = f"{car_id}/"  # Assume the car ID is the folder name
-    try:
-        response = s3_client.list_objects_v2(Bucket=BUCKET_NAME, Prefix=folder_prefix)
+    if car.main_image:
+        keys_to_delete.append(extract_s3_key(car.main_image))
 
-        if "Contents" in response:
-            # Collect keys of all files in the folder
-            objects_to_delete = [{"Key": obj["Key"]} for obj in response["Contents"]]
-            # Delete all files in the folder
-            s3_client.delete_objects(
-                Bucket=BUCKET_NAME,
-                Delete={"Objects": objects_to_delete}
-            )
+    if car.images:
+        for img in car.images:
+            if img.image_url:
+                keys_to_delete.append(extract_s3_key(img.image_url))
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete S3 folder: {str(e)}")
+    keys_to_delete = list(set(keys_to_delete))  # Deduplicate
 
-    # Delete the car from the database
+    # Delete files one by one
+    failed_deletions = []
+    for key in keys_to_delete:
+        try:
+            s3_client.delete_object(Bucket=BUCKET_NAME, Key=key)
+        except Exception as e:
+            failed_deletions.append({"key": key, "error": str(e)})
+
+    if failed_deletions:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fully delete S3 files: {failed_deletions}"
+        )
+
+    # Finally delete the car
     await db.delete(car)
     await db.commit()
 
-    return {"message": f"Car with ID {car_id} and its associated files have been deleted successfully."}
+    return {"message": f"Car {car_id} and associated files deleted successfully"}
